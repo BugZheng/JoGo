@@ -1,0 +1,14 @@
+LogsPath:
+  logs/
+
+DataBaseConfig:
+  DB_HOST:
+    120.12.12.41
+  DB_PORT:
+    3306
+  DB_USERNAME:
+    root
+  DB_PASSWORD:
+    123456
+  DB_NAME:
+    JoGo_db

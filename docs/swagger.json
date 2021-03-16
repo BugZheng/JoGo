@@ -1,0 +1,236 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/demo": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "接口名",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "登录token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "测试字段",
+                        "name": "test",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "测试字段2",
+                        "name": "test2",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户姓名",
+                        "name": "user_name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/swaggers.SwagCommonResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/swaggers.UserListData"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/demo/DemoApi": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "demo"
+                ],
+                "summary": "这是一个测试接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "登录token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "测试字段1",
+                        "name": "test1",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "测试字段2",
+                        "name": "test2",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "测试字段3",
+                        "name": "test3",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/swaggers.SwagCommonResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/swaggers.DemoData"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "swaggers.DemoData": {
+            "type": "object",
+            "properties": {
+                "Avatar": {
+                    "type": "string"
+                },
+                "CreatedAt": {
+                    "type": "string"
+                },
+                "DeletedAt": {
+                    "type": "object"
+                },
+                "ID": {
+                    "type": "integer"
+                },
+                "Nickname": {
+                    "type": "string"
+                },
+                "PasswordDigest": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "UpdatedAt": {
+                    "type": "string"
+                },
+                "UserName": {
+                    "type": "string"
+                }
+            }
+        },
+        "swaggers.SwagCommonResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "200:执行成功，其他:执行出错",
+                    "type": "string",
+                    "example": "200"
+                },
+                "data": {
+                    "description": "执行接口后返回数据",
+                    "type": "object"
+                },
+                "msg": {
+                    "description": "执行接口的提示信息",
+                    "type": "string",
+                    "example": "成功"
+                }
+            }
+        },
+        "swaggers.UserListData": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "createDate": {
+                                "description": "创建时间",
+                                "type": "string"
+                            },
+                            "createby": {
+                                "description": "创建人",
+                                "type": "string"
+                            },
+                            "id": {
+                                "description": "主键",
+                                "type": "integer"
+                            },
+                            "lastEditBy": {
+                                "description": "最后编辑人",
+                                "type": "string"
+                            },
+                            "tel": {
+                                "description": "手机号",
+                                "type": "string"
+                            },
+                            "userName": {
+                                "description": "顾问账号",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "total": {
+                    "description": "总记录数",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

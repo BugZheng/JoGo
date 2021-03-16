@@ -1,0 +1,153 @@
+definitions:
+  swaggers.DemoData:
+    properties:
+      Avatar:
+        type: string
+      CreatedAt:
+        type: string
+      DeletedAt:
+        type: object
+      ID:
+        type: integer
+      Nickname:
+        type: string
+      PasswordDigest:
+        type: string
+      Status:
+        type: string
+      UpdatedAt:
+        type: string
+      UserName:
+        type: string
+    type: object
+  swaggers.SwagCommonResponse:
+    properties:
+      code:
+        description: 200:执行成功，其他:执行出错
+        example: "200"
+        type: string
+      data:
+        description: 执行接口后返回数据
+        type: object
+      msg:
+        description: 执行接口的提示信息
+        example: 成功
+        type: string
+    type: object
+  swaggers.UserListData:
+    properties:
+      list:
+        items:
+          properties:
+            createDate:
+              description: 创建时间
+              type: string
+            createby:
+              description: 创建人
+              type: string
+            id:
+              description: 主键
+              type: integer
+            lastEditBy:
+              description: 最后编辑人
+              type: string
+            tel:
+              description: 手机号
+              type: string
+            userName:
+              description: 顾问账号
+              type: string
+          type: object
+        type: array
+      total:
+        description: 总记录数
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/demo:
+    get:
+      parameters:
+      - description: 登录token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        required: true
+        type: string
+      - description: 测试字段
+        in: query
+        name: test
+        required: true
+        type: string
+      - description: 测试字段2
+        in: query
+        name: test2
+        required: true
+        type: string
+      - description: 用户姓名
+        in: query
+        name: user_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/swaggers.SwagCommonResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/swaggers.UserListData'
+                  type: array
+              type: object
+      summary: 接口名
+      tags:
+      - user
+  /demo/DemoApi:
+    post:
+      parameters:
+      - description: 登录token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 测试字段1
+        in: query
+        name: test1
+        required: true
+        type: string
+      - description: 测试字段2
+        in: query
+        name: test2
+        required: true
+        type: string
+      - description: 测试字段3
+        in: query
+        name: test3
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/swaggers.SwagCommonResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/swaggers.DemoData'
+                  type: array
+              type: object
+      summary: 这是一个测试接口
+      tags:
+      - demo
+swagger: "2.0"
