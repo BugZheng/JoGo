@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/urfave/cli/v2"
 )
@@ -32,6 +33,23 @@ var Commands = []*cli.Command{
 		Usage:   "生成你的swagger doc 文档",
 		Action: func(c *cli.Context) error {
 			fmt.Println("改项目的文档成功生成～")
+			return nil
+		},
+	},
+
+	{
+		Name:    "model",
+		Aliases: []string{"swag"},
+		Usage:   "生成表的结构体, 请输入 model + 表名",
+		Action: func(c *cli.Context) error {
+			params := os.Args
+			if len(params) < 3 {
+				fmt.Println("请输入表名")
+				return nil
+			}
+			tableName := params[2]
+			Code(tableName)
+			fmt.Println("恭喜你,代码生成成功,在app/model的目录下")
 			return nil
 		},
 	},

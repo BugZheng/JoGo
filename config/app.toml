@@ -1,1 +1,1 @@
-RUNMODE = "dev"
+RUNMODE = "prod"

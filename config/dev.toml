@@ -1,6 +1,7 @@
 # 全局日志级别
 LOG_LEVEL = "debug"
 DEBUG=true
+DB_NAME="ego_db"
 
 # rpc 接口路径前缀
 RPC_PREFIX = "/api"
