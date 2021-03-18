@@ -2,9 +2,7 @@ package api
 
 import (
 	"JoGo/app/service"
-	"JoGo/boot"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -19,8 +17,6 @@ import (
 func Demo(c *gin.Context) {
 	var service service.UserLoginService
 	if err := c.ShouldBind(&service); err != nil {
-		boot.ZapLogger.Error("测试错误日志", zap.Error(err), zap.String("testId", "2222222"))
-		boot.ZapLogger.Debug("test", zap.String("debug", "ddddd"))
 		c.JSON(http.StatusBadGateway, ErrorResponse(err))
 		return
 	}

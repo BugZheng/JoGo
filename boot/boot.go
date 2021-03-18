@@ -9,15 +9,12 @@
 package boot
 
 import (
+	"JoGo/pkg/conf"
 	"JoGo/pkg/logger"
 	"github.com/go-redis/redis"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/joho/godotenv"
 	"go.uber.org/zap"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"time"
@@ -45,24 +42,9 @@ var RedisClient *redis.Client
 
 var ZapLogger *zap.Logger
 
-//读取配置
-func GetConfig() (config *Config) {
-	file, err := ioutil.ReadFile("config/app.yaml")
-	if err != nil {
-		log.Printf("读取配置文件失败   #%v ", err)
-	}
-	err = yaml.Unmarshal(file, &config)
-	if err != nil {
-		log.Fatalf("解析失败: %v", err)
-	}
-	return config
-}
-
 // Init 初始化配置项
 func init() {
-	// 从本地读取环境变量
-	godotenv.Load()
-	// 连接数据库
+	conf.ConfigInit()
 	InitDatabase(os.Getenv("MYSQL_DSN"))
 	InitRedis()
 	InitLogger()
@@ -133,7 +115,7 @@ func InitLogger() *zap.Logger {
 		MaxBackups: 1,
 		MaxAge:     10,
 		Compress:   true,
-	}, true)
+	}, conf.GetBool("DEBUG"))
 	ZapLogger.Info("log 初始化成功")
 	return ZapLogger
 }

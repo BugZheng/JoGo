@@ -42,8 +42,9 @@ func main() {
 }
 
 func appInit() {
-	//gin.SetMode(gin.DebugMode)
-	//设置初始化(mysql.redis,)
+	if env := os.Getenv("DEPLOY_ENV"); env == "dev" {
+		gin.SetMode(gin.DebugMode)
+	}
 	r := gin.New()
 	//初始化路由
 	route.RegisterApp(r)
@@ -57,7 +58,7 @@ func appInit() {
 	// go tool pprof （go 自带的性能分析工具）
 	pprof.Register(r)
 	// Graceful restart & zero downtime deploy for Go servers.
-	// Use `kill -USR2 pid` to restart(使用 `kill -USR2 进程号热重启新的进程，优雅退出旧的服务`).
+	// Use `kill -USR2 pid` to restart(使用 `kill -USR2 进程号热重启新的进程dddd，优雅退出旧的服务`).
 	if err := gracehttp.Serve(
 		&http.Server{
 			Addr:         fmt.Sprintf(":%d", 8998),

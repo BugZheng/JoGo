@@ -8,6 +8,7 @@ import (
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"net/http"
+	"os"
 )
 
 //RegisterApp 路由注册
@@ -20,8 +21,9 @@ func RegisterApp(r *gin.Engine) {
 		c.JSON(http.StatusOK, gin.H{"status": "OK"})
 	})
 	//在正式环境无需要这个路由开启
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	if env := os.Getenv("DEPLOY_ENV"); env == "dev" {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	v1 := r.Group("/api/v1").Use(middlewares.Recovery())
 	{
 		v1.GET("demo", api.Demo)
