@@ -9,7 +9,6 @@
 package conf
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
@@ -72,11 +71,8 @@ func ConfigInit() {
 	if err != nil {
 		panic(err)
 	}
-
 	files = make(map[string]*Conf, len(fs))
-
 	for _, f := range fs {
-		fmt.Println(f.Name())
 		if !strings.HasSuffix(f.Name(), ".toml") {
 			continue
 		}

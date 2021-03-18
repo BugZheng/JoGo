@@ -44,6 +44,8 @@ func main() {
 func appInit() {
 	if env := os.Getenv("DEPLOY_ENV"); env == "dev" {
 		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.New()
 	//初始化路由

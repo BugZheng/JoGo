@@ -1,4 +1,3 @@
-//boot 项目启动文件
 /**
  * @Author: BugZheng
  * @Description:初始化的
@@ -57,9 +56,9 @@ func InitDatabase(connString string) {
 	//	GetConfig().DataBaseConfig.DBPASSWORD,
 	//	GetConfig().DataBaseConfig.DBHOST,
 	//	GetConfig().DataBaseConfig.DBNAME)
-	connString = "root:123456@tcp(120.78.152.4:3306)/ego_db?charset=utf8&parseTime=True&loc=Local"
+	connString = "root:123456@tcp(127.0.0.1:3306)/ego_db?charset=utf8&parseTime=True&loc=Local"
 	db, err := gorm.Open("mysql", connString)
-	db.LogMode(true)
+	//db.LogMode(true)
 	// Error
 	if err != nil {
 		ZapLogger.Error("连接数据库不成功", zap.Error(err))
@@ -116,6 +115,5 @@ func InitLogger() *zap.Logger {
 		MaxAge:     10,
 		Compress:   true,
 	}, conf.GetBool("DEBUG"))
-	ZapLogger.Info("log 初始化成功")
 	return ZapLogger
 }
