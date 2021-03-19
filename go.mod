@@ -20,15 +20,15 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/joho/godotenv v1.3.0
+	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/onsi/ginkgo v1.15.1 // indirect
 	github.com/onsi/gomega v1.11.0 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
+	github.com/ulule/limiter/v3 v3.8.0
 	github.com/urfave/cli/v2 v2.3.0
 	go.uber.org/zap v1.16.0
 	golang.org/x/crypto v0.0.0-20210314154223-e6e6c4f2bb5b
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
-	gopkg.in/yaml.v2 v2.4.0
 )

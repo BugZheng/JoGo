@@ -24,7 +24,8 @@ func RegisterApp(r *gin.Engine) {
 	if env := os.Getenv("DEPLOY_ENV"); env == "dev" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
-	v1 := r.Group("/api/v1").Use(middlewares.Recovery())
+	//使用use + 中间件 就可以使用中间件的功能
+	v1 := r.Group("/api/v1").Use(middlewares.Recovery()).Use(middlewares.RateLimiter())
 	{
 		v1.GET("demo", api.Demo)
 		v1.GET("demoApi", api.DemoAPI)
