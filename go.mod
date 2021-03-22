@@ -19,6 +19,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/google/uuid v1.2.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/onsi/ginkgo v1.15.1 // indirect
@@ -31,4 +32,5 @@ require (
 	go.uber.org/zap v1.16.0
 	golang.org/x/crypto v0.0.0-20210314154223-e6e6c4f2bb5b
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
+	gorm.io/gorm v1.21.4
 )

@@ -85,15 +85,10 @@ func selectTableColumn(ctx context.Context, tableName string) map[string]interfa
 	for rows2.Next() {
 		rows2.Scan(&pkName)
 	}
-	maps := []map[string]interface{}{}
-	if len(maps) == 0 {
-		boot.ZapLogger.Info("表不存在")
-		fmt.Println("表不存在")
-		return nil
-	}
 	// select * from information_schema.COLUMNS where table_schema ='readygo' and table_name='t_user';
 	rows3, err := boot.DB.Raw("select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,COLUMN_COMMENT from information_schema.COLUMNS where  TABLE_SCHEMA =? and TABLE_NAME=? and COLUMN_NAME not like ?  order by ORDINAL_POSITION asc", conf.Get("DB_NAME"), tableName, "bak%").Rows()
 	defer rows3.Close()
+	maps := []map[string]interface{}{}
 	columnName := ""
 	dataType := ""
 	isNullAble := ""
@@ -107,6 +102,12 @@ func selectTableColumn(ctx context.Context, tableName string) map[string]interfa
 			"COLUMN_COMMENT": columnComment,
 		})
 	}
+	if len(maps) == 0 {
+		boot.ZapLogger.Info("表不存在")
+		fmt.Println("表不存在")
+		return nil
+	}
+
 	for _, m := range maps {
 		dataType := m["DATA_TYPE"].(string)
 		dataType = strings.ToUpper(dataType)
@@ -180,7 +181,7 @@ func selectTableColumn(ctx context.Context, tableName string) map[string]interfa
 	if strings.HasPrefix(structName, "t_") {
 		structName = structName[2:]
 	}
-	structName = camelCaseName(structName) + "Struct"
+	structName = camelCaseName(structName)
 	info["structName"] = structName
 	info["pname"] = firstToLower(structName)
 	info["packageName"] = packageName

@@ -1,8 +1,10 @@
 package {{.packageName}}
 import (
 	"time"
-	"github.com/jinzhu/gorm"
-	"context"
+	"JoGo/boot"
+	"errors"
+    "fmt"
+    "gorm.io/gorm"
 )
 
 //{{.structName}}TableName 表名常量,方便直接调用
@@ -11,10 +13,9 @@ const {{.structName}}TableName = "{{.tableName}}"
 // {{.structName}} {{.tableComment}}
 type {{.structName}} struct {
 	//引入默认的struct,隔离IEntityStruct的方法改动
-	gorm.Model
 	{{range $i, $v := .columns}}
     //{{$v.field}} {{$v.COLUMN_COMMENT}}
-    {{$v.field}} {{$v.DATA_TYPE}} `column:"{{$v.COLUMN_NAME}}"`
+    {{$v.field}} {{$v.DATA_TYPE}} `gorm:"column:{{$v.COLUMN_NAME}}"`
     {{end}}
 	//------------------数据库字段结束,自定义字段写在下面---------------//
     //如果查询的字段在column tag中没有找到,就会根据名称(不区分大小写,支持 _ 转驼峰)映射到struct的属性上
@@ -24,7 +25,7 @@ type {{.structName}} struct {
 
 //GetTableName 获取表名称
 //IEntityStruct 接口的方法,实体类需要实现!!!
-func (entity *{{.structName}}) GetTableName() string {
+func (entity *{{.structName}}) TableName() string {
 	return {{.structName}}TableName
 }
 
@@ -38,24 +39,26 @@ func (entity *{{.structName}}) GetPKColumnName() string {
 	return "{{.pkName}}"
 }
 
-//Save{{.structName}} 保存{{.tableComment}}
-func Save{{.structName}}(ctx context.Context, {{.pname}} *{{.structName}}) error {
-    return nil
+
+//type SearchResult struct {
+//	Error  error
+//	Status int
+//}
+//通过id找用户
+func Find{{.structName}}ByID(id string) (*{{.structName}}, SearchResult) {
+	var data {{.structName}}
+	result := Result(boot.DB.Where("id = ?", id).First(&data).Error)
+	return &data, result
 }
 
-//Update{{.structName}} 更新{{.tableComment}}
-func Update{{.structName}}(ctx context.Context, {{.pname}} *{{.structName}}) error {
-	return nil
+//通过某一栏找用户
+func Find{{.structName}}ByColum(colum string, value interface{}) (*{{.structName}}, bool) {
+	var data {{.structName}}
+	qs := fmt.Sprintf("%s = ?", colum)
+	err := boot.DB.Where(qs, value).Find(&data).Error
+	return &data, errors.Is(err, gorm.ErrRecordNotFound)
 }
 
-//UpdateNotZero{{.structName}} 更新{{.tableComment}}
-func UpdateNotZero{{.structName}}(ctx context.Context, {{.pname}} *{{.structName}}) error {
-    return nil
-}
 
-//Delete{{.structName}}ById 根据Id删除{{.tableComment}}
-func Delete{{.structName}}ById(ctx context.Context, id string) error {
-	return nil
-}
 
 
